@@ -468,21 +468,21 @@ static int cs4265_set_bias_level(struct snd_soc_component *component,
 {
 	switch (level) {
 	case SND_SOC_BIAS_ON:
-        printk(KERN_ALERT “cs4265_set_bias_level(): In SND_SOC_BIAS_ON.\n");
+        printk(KERN_ALERT "cs4265_set_bias_level(): In SND_SOC_BIAS_ON.\n");
 		break;
 	case SND_SOC_BIAS_PREPARE:
-        printk(KERN_ALERT “cs4265_set_bias_level(): In SND_SOC_BIAS_PREPARE.\n");
+        printk(KERN_ALERT "cs4265_set_bias_level(): In SND_SOC_BIAS_PREPARE.\n");
 		snd_soc_component_update_bits(component, CS4265_PWRCTL,
 			CS4265_PWRCTL_PDN, 0);
 		break;
 	case SND_SOC_BIAS_STANDBY:
-        printk(KERN_ALERT “cs4265_set_bias_level(): In SND_SOC_BIAS_STANDBY.\n");
+        printk(KERN_ALERT "cs4265_set_bias_level(): In SND_SOC_BIAS_STANDBY.\n");
 		snd_soc_component_update_bits(component, CS4265_PWRCTL,
 			CS4265_PWRCTL_PDN,
 			CS4265_PWRCTL_PDN);
 		break;
 	case SND_SOC_BIAS_OFF:
-        printk(KERN_ALERT “cs4265_set_bias_level(): In SND_SOC_BIAS_OFF.\n");
+        printk(KERN_ALERT "cs4265_set_bias_level(): In SND_SOC_BIAS_OFF.\n");
 		snd_soc_component_update_bits(component, CS4265_PWRCTL,
 			CS4265_PWRCTL_PDN,
 			CS4265_PWRCTL_PDN);
