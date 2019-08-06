@@ -22,7 +22,8 @@ cs4265.[h,c] have been renamed to snd_soc_cs4265.[h,c] respectively. The build p
 
 ### Building / Installation
 
-* git clone repository to local directory on the RaspberryPi. 
+* `sudo apt-get install raspberrypi-kernel-headers`
+* `git clone https://github.com/rahealy/snd_soc_cs4265.git` to local directory on the RaspberryPi. 
 * Run `make`
 * Run shell script `$ sudo ./modinstall`
 * Reboot Raspberry Pi `sudo reboot`
