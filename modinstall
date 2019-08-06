@@ -1,0 +1,5 @@
+#!/bin/bash
+
+rm /lib/modules/4.19.57-v7+/kernel/sound/soc/codecs/snd_soc_cs4265.ko
+cp ./snd_soc_cs4265.ko /lib/modules/4.19.57-v7+/kernel/sound/soc/codecs/
+depmod
