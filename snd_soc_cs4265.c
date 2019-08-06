@@ -484,8 +484,8 @@ static int cs4265_set_bias_level(struct snd_soc_component *component,
 		break;
 	case SND_SOC_BIAS_PREPARE:
         printk(KERN_ALERT "cs4265_set_bias_level(): In SND_SOC_BIAS_PREPARE.\n");
-		snd_soc_component_update_bits(component, CS4265_PWRCTL,
-			CS4265_PWRCTL_PDN, 0);
+//		snd_soc_component_update_bits(component, CS4265_PWRCTL,
+//			CS4265_PWRCTL_PDN, 0);
 		break;
 	case SND_SOC_BIAS_STANDBY:
         printk(KERN_ALERT "cs4265_set_bias_level(): In SND_SOC_BIAS_STANDBY.\n");
@@ -495,9 +495,9 @@ static int cs4265_set_bias_level(struct snd_soc_component *component,
 		break;
 	case SND_SOC_BIAS_OFF:
         printk(KERN_ALERT "cs4265_set_bias_level(): In SND_SOC_BIAS_OFF.\n");
-		snd_soc_component_update_bits(component, CS4265_PWRCTL,
-			CS4265_PWRCTL_PDN,
-			CS4265_PWRCTL_PDN);
+//		snd_soc_component_update_bits(component, CS4265_PWRCTL,
+//			CS4265_PWRCTL_PDN,
+//			CS4265_PWRCTL_PDN);
 		break;
 	}
 	return 0;
