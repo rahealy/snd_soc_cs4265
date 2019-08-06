@@ -348,7 +348,7 @@ static int cs4265_set_fmt(struct snd_soc_dai *codec_dai, unsigned int fmt)
 	struct cs4265_private *cs4265 = snd_soc_component_get_drvdata(component);
 	u8 iface = 0;
 
-	printk("cs4265_set_fmt(): Here!\n");
+	printk("cs4265_set_fmt(): Here! Not a good candidate for delay.\n");
 		
 	switch (fmt & SND_SOC_DAIFMT_MASTER_MASK) {
 	case SND_SOC_DAIFMT_CBM_CFM:
@@ -388,7 +388,7 @@ static int cs4265_digital_mute(struct snd_soc_dai *dai, int mute)
 {
 	struct snd_soc_component *component = dai->component;
 
-	printk("cs4265_digital_mute(): Here!\n");
+	printk("cs4265_digital_mute(): Here! Not a good candidate for delay.\n");
 
 	if (mute) {
 		snd_soc_component_update_bits(component, CS4265_DAC_CTL,
@@ -489,9 +489,9 @@ static int cs4265_set_bias_level(struct snd_soc_component *component,
 		break;
 	case SND_SOC_BIAS_STANDBY:
         printk(KERN_ALERT "cs4265_set_bias_level(): In SND_SOC_BIAS_STANDBY.\n");
-		snd_soc_component_update_bits(component, CS4265_PWRCTL,
-			CS4265_PWRCTL_PDN,
-			CS4265_PWRCTL_PDN);
+//		snd_soc_component_update_bits(component, CS4265_PWRCTL,
+//			CS4265_PWRCTL_PDN,
+//			CS4265_PWRCTL_PDN);
 		break;
 	case SND_SOC_BIAS_OFF:
         printk(KERN_ALERT "cs4265_set_bias_level(): In SND_SOC_BIAS_OFF.\n");
