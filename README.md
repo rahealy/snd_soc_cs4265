@@ -32,6 +32,7 @@ cs4265.[h,c] have been renamed to snd_soc_cs4265.[h,c] respectively. The build p
 Forking:
 
 https://guides.github.com/activities/forking/
+
 https://dret.typepad.com/dretblog/2013/02/github-fork-etiquette.html
 
 Writing Kernel Module:
