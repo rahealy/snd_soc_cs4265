@@ -16,6 +16,7 @@ https://statics.cirrus.com/pubs/proDatasheet/CS4265_F4.pdf
 ### Original Driver Code
 
 https://github.com/torvalds/linux/blob/master/sound/soc/codecs/cs4265.h
+
 https://github.com/torvalds/linux/blob/master/sound/soc/codecs/cs4265.c
 
 cs4265.[h,c] have been renamed to snd_soc_cs4265.[h,c] respectively. The build process in the Linux tree changes the filename of the kernel module to snd_soc_cs4265 (guessing there's a naming convention). For now it's easier to rename the files than figure out how it all works.
