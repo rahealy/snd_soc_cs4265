@@ -308,6 +308,8 @@ static int cs4265_get_clk_index(int mclk, int rate)
 {
 	int i;
 
+	printk("cs4265_get_clk_index(): Here!\n");
+	
 	for (i = 0; i < ARRAY_SIZE(clk_map_table); i++) {
 		if (clk_map_table[i].rate == rate &&
 				clk_map_table[i].mclk == mclk)
@@ -322,6 +324,8 @@ static int cs4265_set_sysclk(struct snd_soc_dai *codec_dai, int clk_id,
 	struct snd_soc_component *component = codec_dai->component;
 	struct cs4265_private *cs4265 = snd_soc_component_get_drvdata(component);
 	int i;
+
+	printk("cs4265_set_sysclk(): Here!\n");
 
 	if (clk_id != 0) {
 		dev_err(component->dev, "Invalid clk_id %d\n", clk_id);
@@ -344,6 +348,8 @@ static int cs4265_set_fmt(struct snd_soc_dai *codec_dai, unsigned int fmt)
 	struct cs4265_private *cs4265 = snd_soc_component_get_drvdata(component);
 	u8 iface = 0;
 
+	printk("cs4265_set_fmt(): Here!\n");
+		
 	switch (fmt & SND_SOC_DAIFMT_MASTER_MASK) {
 	case SND_SOC_DAIFMT_CBM_CFM:
 		snd_soc_component_update_bits(component, CS4265_ADC_CTL,
@@ -382,6 +388,8 @@ static int cs4265_digital_mute(struct snd_soc_dai *dai, int mute)
 {
 	struct snd_soc_component *component = dai->component;
 
+	printk("cs4265_digital_mute(): Here!\n");
+
 	if (mute) {
 		snd_soc_component_update_bits(component, CS4265_DAC_CTL,
 			CS4265_DAC_CTL_MUTE,
@@ -407,6 +415,8 @@ static int cs4265_pcm_hw_params(struct snd_pcm_substream *substream,
 	struct snd_soc_component *component = dai->component;
 	struct cs4265_private *cs4265 = snd_soc_component_get_drvdata(component);
 	int index;
+
+	printk("cs4265_pcm_hw_params(): Here!\n");
 
 	if (substream->stream == SNDRV_PCM_STREAM_CAPTURE &&
 		((cs4265->format & SND_SOC_DAIFMT_FORMAT_MASK)
@@ -468,14 +478,14 @@ static int cs4265_set_bias_level(struct snd_soc_component *component,
 {
 	switch (level) {
 	case SND_SOC_BIAS_ON:
-        printk(KERN_ALERT "cs4265_set_bias_level(): In SND_SOC_BIAS_ON.\n");
-		mdelay(3100);
+		printk(KERN_ALERT "cs4265_set_bias_level(): In SND_SOC_BIAS_ON.\n");
+//		printk(KERN_ALERT "cs4265_set_bias_level(): Delaying 3100ms for bias settle.\n");
+//		mdelay(3100);
 		break;
 	case SND_SOC_BIAS_PREPARE:
         printk(KERN_ALERT "cs4265_set_bias_level(): In SND_SOC_BIAS_PREPARE.\n");
 		snd_soc_component_update_bits(component, CS4265_PWRCTL,
 			CS4265_PWRCTL_PDN, 0);
-        printk(KERN_ALERT "cs4265_set_bias_level(): Delaying 3100ms for bias settle.\n");
 		break;
 	case SND_SOC_BIAS_STANDBY:
         printk(KERN_ALERT "cs4265_set_bias_level(): In SND_SOC_BIAS_STANDBY.\n");
