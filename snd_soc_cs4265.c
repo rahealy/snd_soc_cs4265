@@ -468,17 +468,21 @@ static int cs4265_set_bias_level(struct snd_soc_component *component,
 {
 	switch (level) {
 	case SND_SOC_BIAS_ON:
+        printk(KERN_ALERT “cs4265_set_bias_level(): In SND_SOC_BIAS_ON.\n”);
 		break;
 	case SND_SOC_BIAS_PREPARE:
+        printk(KERN_ALERT “cs4265_set_bias_level(): In SND_SOC_BIAS_PREPARE.\n”);
 		snd_soc_component_update_bits(component, CS4265_PWRCTL,
 			CS4265_PWRCTL_PDN, 0);
 		break;
 	case SND_SOC_BIAS_STANDBY:
+        printk(KERN_ALERT “cs4265_set_bias_level(): In SND_SOC_BIAS_STANDBY.\n”);
 		snd_soc_component_update_bits(component, CS4265_PWRCTL,
 			CS4265_PWRCTL_PDN,
 			CS4265_PWRCTL_PDN);
 		break;
 	case SND_SOC_BIAS_OFF:
+        printk(KERN_ALERT “cs4265_set_bias_level(): In SND_SOC_BIAS_OFF.\n”);
 		snd_soc_component_update_bits(component, CS4265_PWRCTL,
 			CS4265_PWRCTL_PDN,
 			CS4265_PWRCTL_PDN);
@@ -576,7 +580,7 @@ static int cs4265_i2c_probe(struct i2c_client *i2c_client,
 	unsigned int devid = 0;
 	unsigned int reg;
 
-	cs4265 = devm_kzalloc(&i2c_client->dev, sizeof(struct cs4265_private),
+    cs4265 = devm_kzalloc(&i2c_client->dev, sizeof(struct cs4265_private),
 			       GFP_KERNEL);
 	if (cs4265 == NULL)
 		return -ENOMEM;
@@ -600,6 +604,8 @@ static int cs4265_i2c_probe(struct i2c_client *i2c_client,
 
 	i2c_set_clientdata(i2c_client, cs4265);
 
+	printk(KERN_ALERT cs4265_i2c_probe(): Querying I2C for cs4265 ID.\n”);
+
 	ret = regmap_read(cs4265->regmap, CS4265_CHIP_ID, &reg);
 	devid = reg & CS4265_CHIP_ID_MASK;
 	if (devid != CS4265_CHIP_ID_VAL) {
@@ -609,6 +615,9 @@ static int cs4265_i2c_probe(struct i2c_client *i2c_client,
 			devid, CS4265_CHIP_ID);
 		return ret;
 	}
+
+	printk(KERN_ALERT cs4265_i2c_probe(): cs4265 found.\n”);
+
 	dev_info(&i2c_client->dev,
 		"CS4265 Version %x\n",
 			reg & CS4265_REV_ID_MASK);
