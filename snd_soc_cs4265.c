@@ -474,6 +474,7 @@ static int cs4265_set_bias_level(struct snd_soc_component *component,
         printk(KERN_ALERT "cs4265_set_bias_level(): In SND_SOC_BIAS_PREPARE.\n");
 		snd_soc_component_update_bits(component, CS4265_PWRCTL,
 			CS4265_PWRCTL_PDN, 0);
+		mdelay(2100);
 		break;
 	case SND_SOC_BIAS_STANDBY:
         printk(KERN_ALERT "cs4265_set_bias_level(): In SND_SOC_BIAS_STANDBY.\n");
