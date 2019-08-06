@@ -22,7 +22,7 @@ cs4265.[h,c] have been renamed to snd_soc_cs4265.[h,c] respectively. The build p
 
 ### Building / Installation
 
-git clone repository to local directory on the RaspberryPi. 
-Run `make`
-Run shell script `$ sudo ./modinstall`
-Reboot Raspberry Pi `sudo reboot`
+* git clone repository to local directory on the RaspberryPi. 
+* Run `make`
+* Run shell script `$ sudo ./modinstall`
+* Reboot Raspberry Pi `sudo reboot`
