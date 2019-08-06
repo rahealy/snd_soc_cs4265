@@ -159,6 +159,21 @@ static const struct snd_kcontrol_new cs4265_snd_controls[] = {
 	SND_SOC_BYTES("C Data Buffer", CS4265_C_DATA_BUFF, 24),
 };
 
+//Callback
+static int adc_on_event(struct snd_soc_dapm_widget *w, struct snd_kcontrol *kcontrol, int event) 
+{
+	switch (event) {
+	case SND_SOC_DAPM_PRE_REG:
+		printk(KERN_ALERT "adc_on_event(): In SND_SOC_DAPM_PRE_REG.\n");
+	break;
+	case SND_SOC_DAPM_POST_REG:
+		printk(KERN_ALERT "adc_on_event(): In SND_SOC_DAPM_POST_REG.\n");
+	break;
+	default:
+		return -EINVAL;
+	}
+}
+
 static const struct snd_soc_dapm_widget cs4265_dapm_widgets[] = {
 
 	SND_SOC_DAPM_INPUT("LINEINL"),
@@ -173,7 +188,8 @@ static const struct snd_soc_dapm_widget cs4265_dapm_widgets[] = {
 
 	SND_SOC_DAPM_MUX("ADC Mux", SND_SOC_NOPM, 0, 0, &mic_linein_mux),
 
-	SND_SOC_DAPM_ADC("ADC", NULL, CS4265_PWRCTL, 2, 1),
+//	SND_SOC_DAPM_ADC("ADC", NULL, CS4265_PWRCTL, 2, 1),
+	SND_SOC_DAPM_ADC_E("ADC", NULL, CS4265_PWRCTL, 2, 1, adc_on_event, SND_SOC_DAPM_PRE_REG | SND_SOC_DAPM_POST_REG), 
 	SND_SOC_DAPM_PGA("Pre-amp MIC", CS4265_PWRCTL, 3,
 			1, NULL, 0),
 
@@ -202,6 +218,16 @@ static const struct snd_soc_dapm_widget cs4265_dapm_widgets[] = {
 	SND_SOC_DAPM_OUTPUT("LINEOUTR"),
 
 };
+
+//FIXME:
+// Event handler version of SND_SOC_DAPM_ADC:
+// SND_SOC_DAPM_ADC_E("ADC", NULL, CS4265_PWRCTL, 2, 1, wevent, wflags)
+// static int sample_ADC_On_event(struct snd_soc_dapm_widget *w, 
+//                                  struct snd_kcontrol *k, 
+// 								 int event) { 
+// 	gpio_set_value(CORGI_GPIO_APM_ON, SND_SOC_DAPM_EVENT_ON(event)); 
+// 	return 0;
+// }
 
 static const struct snd_soc_dapm_route cs4265_audio_map[] = {
 
@@ -484,20 +510,20 @@ static int cs4265_set_bias_level(struct snd_soc_component *component,
 		break;
 	case SND_SOC_BIAS_PREPARE:
         printk(KERN_ALERT "cs4265_set_bias_level(): In SND_SOC_BIAS_PREPARE.\n");
-//		snd_soc_component_update_bits(component, CS4265_PWRCTL,
-//			CS4265_PWRCTL_PDN, 0);
+		snd_soc_component_update_bits(component, CS4265_PWRCTL,
+			CS4265_PWRCTL_PDN, 0); //Power up.
 		break;
 	case SND_SOC_BIAS_STANDBY:
         printk(KERN_ALERT "cs4265_set_bias_level(): In SND_SOC_BIAS_STANDBY.\n");
 //		snd_soc_component_update_bits(component, CS4265_PWRCTL,
 //			CS4265_PWRCTL_PDN,
-//			CS4265_PWRCTL_PDN);
+//			CS4265_PWRCTL_PDN); //Power down.
 		break;
 	case SND_SOC_BIAS_OFF:
         printk(KERN_ALERT "cs4265_set_bias_level(): In SND_SOC_BIAS_OFF.\n");
 //		snd_soc_component_update_bits(component, CS4265_PWRCTL,
 //			CS4265_PWRCTL_PDN,
-//			CS4265_PWRCTL_PDN);
+//			CS4265_PWRCTL_PDN); //Power down.
 		break;
 	}
 	return 0;
@@ -634,7 +660,7 @@ static int cs4265_i2c_probe(struct i2c_client *i2c_client,
 		"CS4265 Version %x\n",
 			reg & CS4265_REV_ID_MASK);
 
-	regmap_write(cs4265->regmap, CS4265_PWRCTL, 0x0F);
+	regmap_write(cs4265->regmap, CS4265_PWRCTL, 0x0F); //Power down everything.
 
 	ret = devm_snd_soc_register_component(&i2c_client->dev,
 			&soc_component_cs4265, cs4265_dai,
