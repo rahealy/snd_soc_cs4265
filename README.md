@@ -49,6 +49,7 @@ $ dmesg -e
 
 **Loopback Switch On to Off**
 Given:
+```
 $ amixer cget name='Loopback Switch'
 numid=20,iface=MIXER,name='Loopback Switch'
   ; type=BOOLEAN,access=rw------,values=1
@@ -58,6 +59,7 @@ $ dmesg -e
 <...>
 [Aug 7 08:36] cs4265_set_bias_level(): In SND_SOC_BIAS_PREPARE.
 [  +0.001733] cs4265_set_bias_level(): In SND_SOC_BIAS_STANDBY.
+```
 
 **Record With Loopback Switch Off**
 
@@ -95,12 +97,13 @@ $ dmesg -e
 
 ### Misc References
 
-Forking:
+Writing Kernel Modules:
+
+https://blog.sourcerer.io/writing-a-simple-linux-kernel-module-d9dc3762c234?gi=de7973f78a01
+
+Forking Git Repos:
 
 https://guides.github.com/activities/forking/
 
 https://dret.typepad.com/dretblog/2013/02/github-fork-etiquette.html
 
-Writing Kernel Module:
-
-https://blog.sourcerer.io/writing-a-simple-linux-kernel-module-d9dc3762c234?gi=de7973f78a01
