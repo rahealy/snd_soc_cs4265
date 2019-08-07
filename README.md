@@ -33,6 +33,7 @@ cs4265.[h,c] have been renamed to snd_soc_cs4265.[h,c] respectively. The build p
 ### Observations
 
 **Loopback Switch Off to On**
+
 Given:
 
 ```
@@ -48,6 +49,7 @@ $ dmesg -e
 ```
 
 **Loopback Switch On to Off**
+
 Given:
 ```
 $ amixer cget name='Loopback Switch'
@@ -63,6 +65,7 @@ $ dmesg -e
 
 **Record With Loopback Switch Off**
 
+Given:
 ```
 $ amixer cget name='Loopback Switch'
 numid=20,iface=MIXER,name='Loopback Switch'
