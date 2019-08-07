@@ -100,6 +100,12 @@ $ dmesg -e
 
 ### Misc References
 
+Linux Dynamic Audio Power Management (DAPM):
+
+https://www.alsa-project.org/main/index.php/DAPM
+
+https://github.com/torvalds/linux/blob/master/include/sound/soc-dapm.h
+
 Writing Kernel Modules:
 
 https://blog.sourcerer.io/writing-a-simple-linux-kernel-module-d9dc3762c234?gi=de7973f78a01
