@@ -29,6 +29,70 @@ cs4265.[h,c] have been renamed to snd_soc_cs4265.[h,c] respectively. The build p
 * Run shell script `$ sudo ./modinstall`
 * Reboot Raspberry Pi `sudo reboot`
 
+
+### Observations
+
+**Loopback Switch Off to On**
+Given:
+
+```
+$ amixer cget name='Loopback Switch'
+numid=20,iface=MIXER,name='Loopback Switch'
+  ; type=BOOLEAN,access=rw------,values=1
+  : values=off
+$ amixer cset name='Loopback Switch' 1
+$ dmesg -e
+<...>
+[Aug 7 08:33] cs4265_set_bias_level(): In SND_SOC_BIAS_PREPARE.
+[  +0.001605] cs4265_set_bias_level(): In SND_SOC_BIAS_ON.
+```
+
+**Loopback Switch On to Off**
+Given:
+$ amixer cget name='Loopback Switch'
+numid=20,iface=MIXER,name='Loopback Switch'
+  ; type=BOOLEAN,access=rw------,values=1
+  : values=on
+$ amixer cset name='Loopback Switch' 0
+$ dmesg -e
+<...>
+[Aug 7 08:36] cs4265_set_bias_level(): In SND_SOC_BIAS_PREPARE.
+[  +0.001733] cs4265_set_bias_level(): In SND_SOC_BIAS_STANDBY.
+
+**Record With Loopback Switch Off**
+
+```
+$ amixer cget name='Loopback Switch'
+numid=20,iface=MIXER,name='Loopback Switch'
+  ; type=BOOLEAN,access=rw------,values=1
+  : values=off
+$ arecord -r 32000 -f S16_LE -c 2 -d 5 ./tmp/test.wav
+$dmesg -e
+<...>
+[Aug 7 08:42] cs4265_pcm_hw_params(): Here!
+[  +0.000012] cs4265_get_clk_index(): Here!
+[  +0.000363] cs4265_set_bias_level(): In SND_SOC_BIAS_PREPARE.
+[  +0.000613] cs4265_set_bias_level(): In SND_SOC_BIAS_ON.
+[  +5.002717] cs4265_set_bias_level(): In SND_SOC_BIAS_PREPARE.
+[  +0.000597] cs4265_set_bias_level(): In SND_SOC_BIAS_STANDBY.
+```
+
+**Record With Loopback Switch On**
+
+Given:
+```
+$ amixer cget name='Loopback Switch'
+numid=20,iface=MIXER,name='Loopback Switch'
+  ; type=BOOLEAN,access=rw------,values=1
+  : values=on
+$ arecord -r 32000 -f S16_LE -c 2 -d 5 ./tmp/test.wav
+$ dmesg -e
+<...>
+[Aug 7 08:45] cs4265_pcm_hw_params(): Here!
+[  +0.000012] cs4265_get_clk_index(): Here!
+```
+
+
 ### Misc References
 
 Forking:
