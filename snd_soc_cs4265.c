@@ -162,6 +162,7 @@ static const struct snd_kcontrol_new cs4265_snd_controls[] = {
 //Callback
 static int adc_on_event(struct snd_soc_dapm_widget *w, struct snd_kcontrol *kcontrol, int event) 
 {
+	printk("adc_on_event(): Here!\n");
 	switch (event) {
 	case SND_SOC_DAPM_PRE_REG:
 		printk(KERN_ALERT "adc_on_event(): In SND_SOC_DAPM_PRE_REG.\n");
@@ -172,6 +173,7 @@ static int adc_on_event(struct snd_soc_dapm_widget *w, struct snd_kcontrol *kcon
 	default:
 		return -EINVAL;
 	}
+	return 0;
 }
 
 static const struct snd_soc_dapm_widget cs4265_dapm_widgets[] = {
@@ -414,9 +416,9 @@ static int cs4265_digital_mute(struct snd_soc_dai *dai, int mute)
 {
 	struct snd_soc_component *component = dai->component;
 
-	printk("cs4265_digital_mute(): Here! Not a good candidate for delay.\n");
 
 	if (mute) {
+		printk("cs4265_digital_mute(): Mute On.\n");
 		snd_soc_component_update_bits(component, CS4265_DAC_CTL,
 			CS4265_DAC_CTL_MUTE,
 			CS4265_DAC_CTL_MUTE);
@@ -424,6 +426,7 @@ static int cs4265_digital_mute(struct snd_soc_dai *dai, int mute)
 			CS4265_SPDIF_CTL2_MUTE,
 			CS4265_SPDIF_CTL2_MUTE);
 	} else {
+		printk("cs4265_digital_mute(): Mute Off.\n");
 		snd_soc_component_update_bits(component, CS4265_DAC_CTL,
 			CS4265_DAC_CTL_MUTE,
 			0);
@@ -515,15 +518,15 @@ static int cs4265_set_bias_level(struct snd_soc_component *component,
 		break;
 	case SND_SOC_BIAS_STANDBY:
         printk(KERN_ALERT "cs4265_set_bias_level(): In SND_SOC_BIAS_STANDBY.\n");
-//		snd_soc_component_update_bits(component, CS4265_PWRCTL,
-//			CS4265_PWRCTL_PDN,
-//			CS4265_PWRCTL_PDN); //Power down.
+		snd_soc_component_update_bits(component, CS4265_PWRCTL,
+			CS4265_PWRCTL_PDN,
+			CS4265_PWRCTL_PDN); //Power down.
 		break;
 	case SND_SOC_BIAS_OFF:
         printk(KERN_ALERT "cs4265_set_bias_level(): In SND_SOC_BIAS_OFF.\n");
-//		snd_soc_component_update_bits(component, CS4265_PWRCTL,
-//			CS4265_PWRCTL_PDN,
-//			CS4265_PWRCTL_PDN); //Power down.
+		snd_soc_component_update_bits(component, CS4265_PWRCTL,
+			CS4265_PWRCTL_PDN,
+			CS4265_PWRCTL_PDN); //Power down.
 		break;
 	}
 	return 0;
